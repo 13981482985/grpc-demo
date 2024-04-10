@@ -1,0 +1,51 @@
+/*
+第一个gRPC开发
+
+一、项目结构
+    1、定义xxx-api 模块
+        定义protobuf IDL语言
+        并且通过命令创建具体的代码 后续client server端引入使用
+     2、xxx-server 模块
+        实现api模块中定义的服务接口
+        发布gRPC服务（创建服务端程序）
+     3、xxx-client 模块
+        创建服务端的stub代理
+        基于stub代理实现rpc调用
+
+二、gRPC的四种通信方式
+    1、简单RPC 一元RPC
+         当client发起调用后，提交数据，并且等待 服务端响应。
+         开发过程中，主要采用就是一元RPC的这种通信方式
+         protobuf语法
+            service HelloService{
+                rpc hello(LoginRequest) returns(SearchResponse){} // 一元RPC
+            }
+
+    2、服务端流式RPC
+         一个请求对象，服务端可以回传多个结果对象。（不同的时刻返回多个结果）
+         protobuf语法
+            service HelloService{
+                rpc hello(LoginRequest) returns(stream SearchResponse){}  // 服务端流式RPC
+            }
+
+    3、客户端流式RPC
+        客户端发送多个请求对象，服务端只返回一个结果
+        protobuf语法
+            service HelloService{
+                rpc hello(stream LoginRequest) returns(SearchResponse){}  // 服务端流式RPC
+            }
+
+    4、双向流式RPC
+    客户端发送多个请求对象，服务端可以返回多个结果
+    protobuf语法
+            service HelloService{
+                rpc hello(stream LoginRequest) returns(stream SearchResponse){}  // 双向流式RPC
+            }
+
+
+三、gRPC的代理方式
+    1、BlockingStub 阻塞通信方式
+    2、Stub 异步 通过监听处理的
+    3、FutureStub 同步异步都支持
+        3.1 FutureStub 只能应用 一元RPC
+*/

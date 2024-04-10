@@ -1,0 +1,18 @@
+syntax = "proto3";
+// 与java语言相关的语法
+option java_multiple_files = false;
+option java_package = "com.suns";
+option java_outer_classname = "TestProto";
+
+message TestRequest{
+    string name = 1;
+}
+message TestResponse{
+    string result = 1;
+}
+
+
+service TestService{
+    rpc testSuns(TestRequest) returns (TestResponse){}  // 一元RPC
+
+}

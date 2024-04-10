@@ -1,0 +1,40 @@
+syntax = "proto3";
+// 与java语言相关的语法
+option java_multiple_files = false;
+option java_package = "com.suns";
+option java_outer_classname = "First";
+
+// 消息的定义
+// singular: 默认修饰message的字段 代表这个字段的只能是0个（null）或者1个
+// repeated: 用于修饰message的字段 代表这个字段的返回值是多个，等价于java中的list
+message LoginRequest{
+    string username = 1;  // 1,2,3,这是编号(不一定必须连续) 从1~2^29-1  19000-19999不能用，这是protobuf自己保留的
+    string password = 4;
+    repeated int32 age = 3;
+}
+
+/* 消息可以嵌套 */
+message SearchResponse{
+    message Result{
+        string url = 1;
+        string title=2;
+    }
+    string name = 1;
+    int32 xxx = 2;
+    string yyy = 3;
+    SearchResponse res = 4;
+    LoginRequest req = 5;
+}
+
+// oneof 关键字 【其中一个】
+message SimpleMessage{
+    oneof test_oneof{
+        string name=1;
+        int32 message = 2;
+    }
+}
+// 服务的定义  可以定义多个服务接口
+// 服务接口里面可以定义多个方法
+service HelloService{
+    rpc hello(LoginRequest) returns(SearchResponse){}  // LoginRequest方法的参数  SearchResponse方法的返回值
+}
